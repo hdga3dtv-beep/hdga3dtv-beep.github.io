@@ -80,7 +80,8 @@ h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; }
 .boton svg { width: 30px; height: 30px; flex: none; }
 .boton small { display: block; font: 400 .85rem 'Atkinson Hyperlegible', sans-serif; color: #5c4800; text-align: left; }
 .boton .lineas { text-align: left; line-height: 1.15; }
-.boton.tiza { background: transparent; color: var(--tiza); border: 2px solid rgba(251,248,238,.6); box-shadow: none; font-size: 1.1rem; padding: 12px 22px; }
+.boton.tiza { background: transparent; color: var(--tiza); border: 2px solid rgba(251,248,238,.6); box-shadow: none; padding: 14px 28px 12px; }
+.boton.tiza:active { transform: translateY(2px); box-shadow: none; }
 .boton.tiza small { color: #cfe0d6; }
 .boton.tiza:hover { background: rgba(251,248,238,.1); }
 .otra { color: #dfeae3; font-size: 1rem; }
@@ -383,10 +384,15 @@ footer .envoltura { display: flex; flex-wrap: wrap; gap: 10px 30px; justify-cont
          '<span class="lineas">Descargar para Mac<small>Planeador-Mac.zip · 39 MB · macOS 11 o más nuevo</small></span></a>'
   };
 
+  var OTRO = {      // el del otro sistema va al lado, como botón de gis (sin preguntar «¿Usas Mac?»)
+    win: '<a class="boton tiza" data-so="win" href="' + URL_WIN + '">' + icono('windows') +
+         '<span class="lineas">Descárgalo para Windows<small>Planeador.zip · 13 MB · Windows 10 u 11</small></span></a>',
+    mac: '<a class="boton tiza" data-so="mac" href="' + URL_MAC + '">' + icono('mac') +
+         '<span class="lineas">Descárgalo para Mac<small>Planeador-Mac.zip · 39 MB · macOS 11 o más nuevo</small></span></a>'
+  };
+
   if (so === 'win' || so === 'mac') {
-    var otro = so === 'win' ? 'mac' : 'win';
-    caja.innerHTML = BOTON[so] + '<p class="otra">¿Usas ' + (otro === 'mac' ? 'Mac' : 'Windows') + '? <a data-so="' + otro +
-      '" href="' + (otro === 'mac' ? URL_MAC : URL_WIN) + '">Descárgalo para ' + (otro === 'mac' ? 'Mac' : 'Windows') + '</a></p>';
+    caja.innerHTML = '<div class="dos-botones">' + BOTON[so] + OTRO[so === 'win' ? 'mac' : 'win'] + '</div>';
   } else if (so === 'cel') {
     document.documentElement.classList.add('es-cel');
     caja.innerHTML =
