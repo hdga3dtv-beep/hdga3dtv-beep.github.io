@@ -86,7 +86,10 @@ h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; }
 .boton.tiza:hover { background: rgba(251,248,238,.1); }
 .otra { color: #dfeae3; font-size: 1rem; }
 .otra a { color: var(--gis); font-weight: 700; }
-.dos-botones { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.dos-botones {                                   /* los dos del mismo ancho, lado a lado o uno sobre otro */
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 400px)); grid-auto-rows: 1fr;
+  gap: 14px; justify-content: center; width: 100%;
+}
 .aviso-cel {
   background: var(--tiza); color: var(--texto); border-radius: var(--radio); padding: 20px 22px; max-width: 560px;
   text-align: left; box-shadow: 0 10px 28px rgba(0,0,0,.25);
@@ -384,10 +387,10 @@ footer .envoltura { display: flex; flex-wrap: wrap; gap: 10px 30px; justify-cont
          '<span class="lineas">Descargar para Mac<small>Planeador-Mac.zip · 39 MB · macOS 11 o más nuevo</small></span></a>'
   };
 
-  var OTRO = {      // el del otro sistema va al lado, como botón de gis (sin preguntar «¿Usas Mac?»)
-    win: '<a class="boton tiza" data-so="win" href="' + URL_WIN + '">' + icono('windows') +
+  var OTRO = {      // el del otro sistema va al lado, igual que el primero (sin preguntar «¿Usas Mac?»)
+    win: '<a class="boton" data-so="win" href="' + URL_WIN + '">' + icono('windows') +
          '<span class="lineas">Descárgalo para Windows<small>Planeador.zip · 13 MB · Windows 10 u 11</small></span></a>',
-    mac: '<a class="boton tiza" data-so="mac" href="' + URL_MAC + '">' + icono('mac') +
+    mac: '<a class="boton" data-so="mac" href="' + URL_MAC + '">' + icono('mac') +
          '<span class="lineas">Descárgalo para Mac<small>Planeador-Mac.zip · 39 MB · macOS 11 o más nuevo</small></span></a>'
   };
 
