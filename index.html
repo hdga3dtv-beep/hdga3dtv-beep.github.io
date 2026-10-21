@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planeador · Descarga</title>
+<meta name="description" content="Arma tus planeaciones didácticas de primaria (NEM, Fases 3, 4 y 5) y sácalas en Word y PDF. Gratis, sin internet y sin cuentas. Para Windows y Mac.">
+<meta name="theme-color" content="#24493a">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hdga3dtv-beep.github.io/">
+<meta property="og:title" content="Planeador: tus planeaciones didácticas en Word y PDF">
+<meta property="og:description" content="Gratis, sin internet y sin cuentas. Para Windows y Mac.">
+<meta property="og:image" content="https://hdga3dtv-beep.github.io/img/vista-previa.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="img/icono.png">
+<style>
+@font-face { font-family: 'Atkinson Hyperlegible'; src: url(fonts/atkinson-400.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Atkinson Hyperlegible'; src: url(fonts/atkinson-700.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Atkinson Hyperlegible'; src: url(fonts/atkinson-400-italica.woff2) format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Baloo 2'; src: url(fonts/baloo2-variable.woff2) format('woff2'); font-weight: 400 800; font-display: swap; }
+@font-face { font-family: 'Patrick Hand'; src: url(fonts/patrick-hand.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+
+:root {
+  color-scheme: light;
+  --fondo: #f2ede3; --hoja: #ffffff; --texto: #22202b; --suave: #4d4858; --tenue: #6a6475; --borde: #d6cfbf;
+  --pizarron: #24493a; --pizarron-sombra: #142b21; --madera: #b07a45; --madera-sombra: #8a5c30;
+  --gis: #ffd34e; --gis-sombra: #c99a12; --tiza: #fbf8ee; --cuadro: #e3ebf4; --nota: #fff3a6; --nota-t: #3d3200;
+  --rojo: #e5484d; --naranja: #f08a24; --amarillo: #e8b100; --verde: #2f9e44; --turquesa: #0f9aa8; --azul: #2f6fe4;
+  --morado: #8b4fd8; --rosa: #d6409f;
+  --titulos: 'Baloo 2', 'Segoe UI', system-ui, sans-serif;
+  --mano: 'Patrick Hand', 'Segoe Print', cursive;
+  --sombra: 0 1px 2px rgba(60, 45, 20, .10), 0 12px 32px rgba(60, 45, 20, .08);
+  --radio: 16px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; color: var(--texto); background: var(--fondo);
+  font: 17px/1.6 'Atkinson Hyperlegible', 'Segoe UI', system-ui, sans-serif;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--azul); }
+.envoltura { width: min(1080px, 100% - 32px); margin-inline: auto; }
+h1, h2, h3 { font-family: var(--titulos); line-height: 1.15; margin: 0; }
+h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 800; }
+.saltar { position: absolute; left: -999px; }
+.saltar:focus { left: 16px; top: 16px; z-index: 9; background: var(--gis); padding: 8px 14px; border-radius: 8px; }
+:focus-visible { outline: 3px solid var(--azul); outline-offset: 3px; }
+
+/* el pizarrón de arriba, con su repisa de madera y sus gises */
+.pizarron {
+  background: radial-gradient(1200px 400px at 20% 0%, rgba(255,255,255,.06), transparent 60%),
+              radial-gradient(900px 300px at 90% 30%, rgba(255,255,255,.04), transparent 60%), var(--pizarron);
+  color: var(--tiza); padding-bottom: 150px; position: relative;
+}
+.barra { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
+.marca { display: flex; align-items: center; gap: 12px; font: 800 1.6rem var(--titulos); color: var(--tiza); text-decoration: none; }
+.marca img { width: 42px; height: 42px; border-radius: 10px; background: var(--tiza); padding: 4px; }
+.barra nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.barra nav a { color: var(--tiza); text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1.5px solid rgba(251,248,238,.35); font-weight: 700; font-size: .95rem; }
+.barra nav a:hover { background: rgba(251,248,238,.12); }
+.portada { text-align: center; padding: 36px 0 8px; }
+.portada h1 { font-size: clamp(2.1rem, 6vw, 3.6rem); font-weight: 800; max-width: 22ch; margin-inline: auto; text-wrap: balance; }
+.subrayado { color: var(--gis); white-space: nowrap; text-decoration: underline wavy rgba(255, 211, 78, .6);
+  text-decoration-thickness: .06em; text-underline-offset: .2em; text-decoration-skip-ink: none; }
+.bajada { font-size: clamp(1.05rem, 2.4vw, 1.25rem); max-width: 46ch; margin: 18px auto 0; color: #e7efe9; }
+
+/* la descarga */
+.descarga { margin: 30px auto 0; display: grid; justify-items: center; gap: 12px; }
+.boton {
+  display: inline-flex; align-items: center; gap: 14px; text-decoration: none; cursor: pointer;
+  font: 800 1.35rem var(--titulos); color: #2b2100; background: var(--gis); border: 0;
+  padding: 16px 30px 14px; border-radius: 16px; box-shadow: 0 5px 0 var(--gis-sombra), 0 12px 24px rgba(0,0,0,.25);
+  transition: transform .08s, box-shadow .08s;
+}
+.boton:hover { transform: translateY(-1px); }
+.boton:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--gis-sombra), 0 4px 10px rgba(0,0,0,.25); }
+.boton svg { width: 30px; height: 30px; flex: none; }
+.boton small { display: block; font: 400 .85rem 'Atkinson Hyperlegible', sans-serif; color: #5c4800; text-align: left; }
+.boton .lineas { text-align: left; line-height: 1.15; }
+.boton.tiza { background: transparent; color: var(--tiza); border: 2px solid rgba(251,248,238,.6); box-shadow: none; font-size: 1.1rem; padding: 12px 22px; }
+.boton.tiza small { color: #cfe0d6; }
+.boton.tiza:hover { background: rgba(251,248,238,.1); }
+.otra { color: #dfeae3; font-size: 1rem; }
+.otra a { color: var(--gis); font-weight: 700; }
+.dos-botones { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.aviso-cel {
+  background: var(--tiza); color: var(--texto); border-radius: var(--radio); padding: 20px 22px; max-width: 560px;
+  text-align: left; box-shadow: 0 10px 28px rgba(0,0,0,.25);
+}
+.aviso-cel h3 { font-size: 1.35rem; margin-bottom: 6px; }
+.aviso-cel p { margin: 0 0 12px; }
+.aviso-cel .enlace { font-family: ui-monospace, Consolas, monospace; font-size: .95rem; background: var(--cuadro); padding: 8px 10px; border-radius: 8px; word-break: break-all; margin-bottom: 12px; }
+.aviso-cel .acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.chico { font: 700 1rem var(--titulos); border: 0; cursor: pointer; border-radius: 12px; padding: 10px 16px; background: var(--pizarron); color: var(--tiza); text-decoration: none; display: inline-flex; align-items: center; }
+.chico.claro { background: var(--cuadro); color: var(--texto); }
+.sellos { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: center; font-family: var(--mano); font-size: 1.25rem; color: #e7efe9; }
+.sellos li::before { content: '✓ '; color: var(--gis); }
+.repisa { position: absolute; left: 0; right: 0; bottom: 0; height: 16px; background: linear-gradient(var(--madera), var(--madera-sombra)); }
+.repisa::before, .repisa::after { content: ''; position: absolute; bottom: 12px; height: 9px; border-radius: 4px; }
+.repisa::before { right: 12%; width: 54px; background: var(--tiza); box-shadow: -70px 0 0 -1px var(--gis), -128px 0 0 -1px #f7a8c4; }
+.repisa::after { left: 10%; width: 70px; height: 14px; bottom: 14px; background: #3a3530; border-radius: 3px; }
+
+/* hojas de cuaderno */
+main { position: relative; }
+.ventana {
+  margin: -128px auto 0; position: relative; background: var(--hoja); border-radius: 14px; overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,.08), 0 26px 60px rgba(30, 40, 30, .28); max-width: 1000px;
+}
+.ventana .tope { display: flex; gap: 7px; padding: 10px 14px; background: #e9e4d9; }
+.ventana .tope i { width: 12px; height: 12px; border-radius: 50%; background: #d4cbb8; }
+.ventana .tope i:first-child { background: #ec6a5e; } .ventana .tope i:nth-child(2) { background: #f4bf4f; } .ventana .tope i:nth-child(3) { background: #61c554; }
+.pie-foto { text-align: center; font-family: var(--mano); font-size: 1.2rem; color: var(--suave); margin: 14px 0 0; }
+section { padding: 72px 0 0; }
+.titulo-sec { text-align: center; margin-bottom: 30px; }
+.titulo-sec p { margin: 8px auto 0; color: var(--suave); max-width: 58ch; }
+.cuaderno {
+  background-color: var(--hoja);
+  background-image: linear-gradient(var(--cuadro) 1px, transparent 1px), linear-gradient(90deg, var(--cuadro) 1px, transparent 1px);
+  background-size: 24px 24px; border-radius: var(--radio); box-shadow: var(--sombra); position: relative;
+}
+
+/* qué hace */
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.tarjeta { background: var(--hoja); border-radius: var(--radio); padding: 20px 20px 18px 24px; box-shadow: var(--sombra); border-left: 6px solid var(--c, var(--azul)); }
+.tarjeta .num { font: 800 1.9rem/1 var(--titulos); color: var(--c); }
+.tarjeta h3 { font-size: 1.25rem; margin: 6px 0 4px; }
+.tarjeta p { margin: 0; color: var(--suave); font-size: 1rem; }
+.asi-sale { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: center; margin-top: 34px; padding: 26px; }
+.asi-sale img { border-radius: 8px; box-shadow: 0 6px 22px rgba(0,0,0,.14); transform: rotate(-1.2deg); background: #fff; }
+.asi-sale h3 { font-size: 1.6rem; margin-bottom: 8px; }
+.asi-sale ul { padding-left: 1.1em; margin: 10px 0 0; }
+
+/* instalarlo */
+.pestanas { display: flex; justify-content: center; gap: 8px; margin-bottom: -2px; position: relative; z-index: 1; }
+.pestana {
+  font: 800 1.15rem var(--titulos); border: 2px solid var(--borde); border-bottom: 0; background: #e9e4d9; color: var(--suave);
+  padding: 10px 22px; border-radius: 14px 14px 0 0; cursor: pointer; display: inline-flex; gap: 8px; align-items: center;
+}
+.pestana svg { width: 20px; height: 20px; }
+.pestana[aria-selected="true"] { background: var(--hoja); color: var(--texto); border-color: var(--borde); }
+.panel-pasos { border: 2px solid var(--borde); padding: 28px clamp(18px, 4vw, 40px) 30px; }
+.panel-pasos[hidden] { display: none; }
+.pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; counter-reset: paso; }
+.pasos li { display: grid; grid-template-columns: 54px 1fr; gap: 14px; align-items: start; counter-increment: paso; }
+.pasos li::before {
+  content: counter(paso); display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%;
+  font: 800 1.6rem var(--titulos); color: #fff; background: var(--c);
+}
+.pasos li:nth-child(1) { --c: var(--rojo); } .pasos li:nth-child(2) { --c: var(--naranja); } .pasos li:nth-child(3) { --c: var(--verde); }
+.pasos h3 { font-size: 1.3rem; margin: 4px 0 2px; }
+.pasos p { margin: 0; color: var(--suave); }
+kbd, .tecla { font: 700 .9em 'Atkinson Hyperlegible', sans-serif; background: #fff; border: 1.5px solid var(--borde); border-bottom-width: 3px; border-radius: 6px; padding: 0 6px; white-space: nowrap; color: var(--texto); }
+.nota {
+  background: var(--nota); color: var(--nota-t); border-radius: 4px 4px 14px 4px; padding: 14px 18px; margin-top: 22px;
+  font-family: var(--mano); font-size: 1.2rem; line-height: 1.45; box-shadow: 0 4px 12px rgba(120, 100, 0, .14); transform: rotate(-.4deg);
+}
+.nota b { font-family: var(--titulos); font-weight: 700; font-size: 1.05rem; }
+.requisitos { margin: 20px 0 0; color: var(--suave); font-size: 1rem; }
+.requisitos b { color: var(--texto); }
+.descarga-aqui { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.descarga-aqui .boton { font-size: 1.1rem; padding: 12px 22px 10px; }
+.es-cel .descarga-aqui { display: none; }       /* en el celular no se descarga: se manda el enlace a la computadora */
+
+/* preguntas */
+.preguntas { display: grid; gap: 10px; max-width: 820px; margin-inline: auto; }
+details { background: var(--hoja); border-radius: 12px; box-shadow: var(--sombra); padding: 0 20px; }
+summary { cursor: pointer; font: 700 1.15rem var(--titulos); padding: 16px 0; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '+'; font-size: 1.5rem; line-height: 1; color: var(--tenue); }
+details[open] summary::after { content: '–'; }
+details p { margin: 0 0 16px; color: var(--suave); }
+
+footer { margin-top: 80px; background: var(--pizarron); color: #dfeae3; padding: 30px 0 36px; font-size: .98rem; }
+footer a { color: var(--gis); }
+footer .envoltura { display: flex; flex-wrap: wrap; gap: 10px 30px; justify-content: space-between; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 140%); transition: transform .3s;
+  background: var(--texto); color: #fff; padding: 14px 20px; border-radius: 14px; max-width: calc(100% - 32px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.3); z-index: 10; font-size: 1rem;
+}
+.toast.ver { transform: translate(-50%, 0); }
+.toast a { color: var(--gis); font-weight: 700; }
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .barra nav { display: none; }
+  .pizarron { padding-bottom: 110px; }
+  .ventana { margin-top: -90px; }
+  .asi-sale { grid-template-columns: 1fr; padding: 18px; }
+  .boton { font-size: 1.15rem; padding: 14px 20px 12px; }
+  .pestana { padding: 8px 14px; font-size: 1.05rem; }
+  .pasos li { grid-template-columns: 42px 1fr; }
+  .pasos li::before { width: 42px; height: 42px; font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .boton, .toast { transition: none; } }
+</style>
+</head>
+<body>
+<a class="saltar" href="#instalar">Saltar a cómo instalarlo</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-windows" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5.1 10.4 4v7.1H3zm8.4-1.2L21 2.5v8.6h-9.6zM3 12.1h7.4v7.1L3 18.1zm8.4 0H21v8.6l-9.6-1.4z"/></symbol>
+  <symbol id="i-mac" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-3.9zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.5 2.8-1.3z"/></symbol>
+  <symbol id="i-bajar" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></symbol>
+</svg>
+
+<header class="pizarron">
+  <div class="envoltura barra">
+    <a class="marca" href="./"><img src="img/icono.png" alt="" width="42" height="42">Planeador</a>
+    <nav aria-label="En esta página">
+      <a href="#que-hace">Qué hace</a>
+      <a href="#instalar">Cómo instalarlo</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+  </div>
+  <div class="envoltura portada">
+    <h1>Tu planeación didáctica, <span class="subrayado">en Word y PDF</span></h1>
+    <p class="bajada">Un panel para armar planeaciones de primaria paso a paso, con los contenidos y PDA del programa
+      sintético 2024 de la NEM. Revisa que no falte nada y te entrega el Word y el PDF listos para entregar.</p>
+
+    <div class="descarga" id="descarga" aria-live="polite">
+      <div class="dos-botones">
+        <a class="boton" data-so="win" href="https://github.com/hdga3dtv-beep/planeador/raw/main/Planeador.zip">
+          <svg aria-hidden="true"><use href="#i-windows"/></svg>
+          <span class="lineas">Descargar para Windows<small>Planeador.zip · 13 MB · Windows 10 u 11</small></span></a>
+        <a class="boton" data-so="mac" href="https://github.com/hdga3dtv-beep/planeador-mac/releases/latest/download/Planeador-Mac.zip">
+          <svg aria-hidden="true"><use href="#i-mac"/></svg>
+          <span class="lineas">Descargar para Mac<small>Planeador-Mac.zip · 39 MB · macOS 11 o más nuevo</small></span></a>
+      </div>
+    </div>
+
+    <ul class="sellos">
+      <li>Gratis</li><li>Sin internet</li><li>Sin cuentas</li><li>Lo que escribes no sale de tu computadora</li>
+    </ul>
+  </div>
+  <div class="repisa"></div>
+</header>
+
+<main id="contenido">
+  <div class="envoltura">
+    <figure class="ventana" style="margin-bottom:0">
+      <div class="tope" aria-hidden="true"><i></i><i></i><i></i></div>
+      <img src="img/panel.jpg" width="1200" height="884"
+           alt="El panel del Planeador: arriba la ruta de 9 pasos, todos completos; abajo, la elección del campo formativo central (Saberes y pensamiento científico) con su metodología, Indagación STEAM, y sus 5 etapas.">
+    </figure>
+    <p class="pie-foto">Así se ve: una ruta de 9 pasos que se va palomeando.</p>
+  </div>
+
+  <section id="que-hace">
+    <div class="envoltura">
+      <div class="titulo-sec">
+        <h2>Qué hace</h2>
+        <p>Tú escribes tus actividades; el Planeador acomoda todo lo demás y lo revisa.</p>
+      </div>
+      <div class="tarjetas">
+        <article class="tarjeta" style="--c: var(--rojo)"><div class="num">9</div><h3>pasos guiados</h3>
+          <p>Datos de la escuela, campo formativo, contenidos y PDA, proyecto, etapas de la metodología, la semana, evaluación, ajustes NEE y formato.</p></article>
+        <article class="tarjeta" style="--c: var(--naranja)"><div class="num">3 · 4 · 5</div><h3>Fases de primaria</h3>
+          <p>Contenidos y PDA textuales de los programas sintéticos 2024 de la SEP. Eliges el campo y la metodología se elige sola.</p></article>
+        <article class="tarjeta" style="--c: var(--verde)"><div class="num">✓</div><h3>Revisa antes de entregar</h3>
+          <p>Busca PDA que no son textuales, etapas fuera de orden, sesiones sin consignas o firmas que faltan.</p></article>
+        <article class="tarjeta" style="--c: var(--azul)"><div class="num">5</div><h3>formatos en Word y PDF</h3>
+          <p>La Planeación Cedros o el formato de tu metodología: ABPC, STEAM, ABP o Aprendizaje Servicio.</p></article>
+      </div>
+
+      <div class="cuaderno asi-sale">
+        <img src="img/hoja.jpg" width="1109" height="857" loading="lazy"
+             alt="Primera hoja del PDF que genera el Planeador para la planeación de ejemplo «Comemos sano»: encabezado con los logos de la escuela, datos del docente y la tabla del proyecto.">
+        <div>
+          <h3>Así sale tu planeación</h3>
+          <p>Con tus logos, tus datos y la hoja de firmas en orden de jerarquía. Trae una planeación de ejemplo, con datos
+            ficticios, para que veas cómo queda antes de hacer la tuya.</p>
+          <ul>
+            <li>Guarda versiones anteriores, borradores y una papelera.</li>
+            <li>«Mis datos de la escuela» se llenan una sola vez.</li>
+            <li>Se abre con un clic desde su ícono, como cualquier programa.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="instalar">
+    <div class="envoltura">
+      <div class="titulo-sec">
+        <h2>Cómo instalarlo</h2>
+        <p>Tres pasos, una sola vez. No hay que instalar nada más: ya trae todo lo que necesita.</p>
+      </div>
+      <div class="pestanas" role="tablist" aria-label="Sistema">
+        <button class="pestana" role="tab" id="t-win" aria-controls="p-win" aria-selected="true"><svg aria-hidden="true"><use href="#i-windows"/></svg>Windows</button>
+        <button class="pestana" role="tab" id="t-mac" aria-controls="p-mac" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-mac"/></svg>Mac</button>
+      </div>
+
+      <div class="cuaderno panel-pasos" role="tabpanel" id="p-win" aria-labelledby="t-win">
+        <ol class="pasos">
+          <li><div><h3>Descárgalo</h3><p>Con el botón de arriba se baja <b>Planeador.zip</b> a tu carpeta Descargas.</p></div></li>
+          <li><div><h3>Descomprímelo</h3><p>Clic derecho en <b>Planeador.zip</b> → <b>Extraer todo…</b> → <b>Extraer</b>.</p></div></li>
+          <li><div><h3>Instálalo</h3><p>En la carpeta que sale, doble clic en <b>Instalar</b>. Queda el ícono <b>Planeador</b> en tu escritorio y en el menú Inicio, y ya puedes borrar el .zip.</p></div></li>
+        </ol>
+        <div class="nota"><b>Si Windows dice «Windows protegió su PC»:</b> pica <b>Más información</b> y luego
+          <b>Ejecutar de todas formas</b>. Sale porque el Planeador no es de una empresa que pague por firmar sus programas.</div>
+        <p class="requisitos"><b>Necesitas:</b> Windows 10 u 11 y Microsoft Word para el PDF (sin Word, te deja el .docx).
+          Tus planeaciones quedan en <b>Documentos › Planeador › planeaciones</b>.</p>
+        <div class="descarga-aqui"><a class="boton" href="https://github.com/hdga3dtv-beep/planeador/raw/main/Planeador.zip" data-so="win">
+          <svg aria-hidden="true"><use href="#i-bajar"/></svg>Descargar para Windows</a></div>
+      </div>
+
+      <div class="cuaderno panel-pasos" role="tabpanel" id="p-mac" aria-labelledby="t-mac" hidden>
+        <ol class="pasos">
+          <li><div><h3>Descárgalo</h3><p>Con el botón de arriba se baja <b>Planeador-Mac.zip</b>. Safari lo descomprime solo y deja la carpeta <b>Planeador</b> en Descargas (si no, doble clic en el .zip).</p></div></li>
+          <li><div><h3>Instálalo</h3><p>En esa carpeta, doble clic en <b>Instalar.command</b>. Si Terminal pide permiso para la carpeta Descargas, pica <b>Permitir</b>.</p></div></li>
+          <li><div><h3>Ponlo en el Dock</h3><p>Se abre una ventana con la app <b>Planeador</b>: arrástrala al Dock. También la encuentras con Spotlight (<kbd>⌘</kbd> + <kbd>Espacio</kbd>).</p></div></li>
+        </ol>
+        <div class="nota"><b>Si macOS no deja abrir «Instalar.command»:</b> pica <b>Listo</b> (no lo mandes a la papelera),
+          abre <b>Configuración del Sistema → Privacidad y seguridad</b>, baja hasta el aviso y pica <b>Abrir igualmente</b>.
+          En macOS 14 o anterior basta con <kbd>Control</kbd> + clic en el archivo → <b>Abrir</b>. Sale porque el Planeador no viene de la App Store.</div>
+        <p class="requisitos"><b>Necesitas:</b> macOS 11 o más nuevo (chip Apple o Intel) y Microsoft Word para el PDF
+          (también sirve LibreOffice; sin ninguno, te deja el .docx). La primera vez que generes, macOS pregunta si el
+          Planeador puede usar Word: pica <b>Aceptar</b>. Tus planeaciones quedan en <b>Planeador › planeaciones</b>, en tu carpeta de inicio.</p>
+        <div class="descarga-aqui"><a class="boton" href="https://github.com/hdga3dtv-beep/planeador-mac/releases/latest/download/Planeador-Mac.zip" data-so="mac">
+          <svg aria-hidden="true"><use href="#i-bajar"/></svg>Descargar para Mac</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="preguntas">
+    <div class="envoltura">
+      <div class="titulo-sec"><h2>Preguntas</h2></div>
+      <div class="preguntas">
+        <details><summary>¿Cuesta algo?</summary><p>No. Es gratis, sin anuncios y sin cuentas.</p></details>
+        <details><summary>¿Necesito internet?</summary><p>Solo para descargarlo. Después funciona sin internet: todo se queda en tu computadora.</p></details>
+        <details><summary>¿Funciona en el celular o en la tableta?</summary><p>No. Es para computadora con Windows o con Mac. Si abriste esta página en el celular, mándate el enlace y descárgalo en tu computadora.</p></details>
+        <details><summary>¿Por qué Windows o macOS me avisan al abrirlo?</summary><p>Porque el Planeador no está firmado por una empresa (eso cuesta) ni viene de una tienda de aplicaciones. El código está abierto en GitHub, y la versión para Mac se instala y se prueba sola en Macs con chip Apple y con Intel antes de publicarse.</p></details>
+        <details><summary>¿Y si no tengo Word?</summary><p>El Planeador arma tu planeación en Word (.docx) de todos modos; lo que no puede es pasarla a PDF. En Mac también sirve LibreOffice.</p></details>
+        <details><summary>¿Cómo lo actualizo?</summary><p>Descárgalo otra vez de esta página y vuelve a abrir <b>Instalar</b>. Tus planeaciones y tus datos de la escuela se quedan.</p></details>
+        <details><summary>¿Dónde quedan mis planeaciones?</summary><p>En Windows, en Documentos › Planeador › planeaciones. En Mac, en la carpeta Planeador de tu carpeta de inicio. También las abres desde el menú Archivo del Planeador.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="envoltura">
+    <span>Planeador · panel de planeaciones didácticas para primaria</span>
+    <span>Código: <a href="https://github.com/hdga3dtv-beep/planeador">versión Windows</a> · <a href="https://github.com/hdga3dtv-beep/planeador-mac">versión Mac</a></span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  var URL_WIN = 'https://github.com/hdga3dtv-beep/planeador/raw/main/Planeador.zip';
+  var URL_MAC = 'https://github.com/hdga3dtv-beep/planeador-mac/releases/latest/download/Planeador-Mac.zip';
+  var aqui = location.href.split('#')[0].split('?')[0];
+
+  function sistema() {
+    var forzado = new URLSearchParams(location.search).get('so');
+    if (forzado) return forzado;
+    var ua = navigator.userAgent || '';
+    var uad = navigator.userAgentData;
+    var plat = (uad && uad.platform) || navigator.platform || '';
+    var tactil = (navigator.maxTouchPoints || 0) > 1;
+    if ((uad && uad.mobile) || /Android|iPhone|iPod/i.test(ua)) return 'cel';
+    if (/iPad/.test(ua) || (/Macintosh/.test(ua) && tactil)) return 'cel';     // el iPad dice ser una Mac
+    if (/Win/i.test(plat) || /Windows/.test(ua)) return 'win';
+    if (/Mac/i.test(plat) || /Macintosh/.test(ua)) return 'mac';
+    return 'otro';
+  }
+
+  var so = sistema();
+  var caja = document.getElementById('descarga');
+  var icono = function (k) { return '<svg aria-hidden="true"><use href="#i-' + k + '"/></svg>'; };
+  var BOTON = {
+    win: '<a class="boton" data-so="win" href="' + URL_WIN + '">' + icono('windows') +
+         '<span class="lineas">Descargar para Windows<small>Planeador.zip · 13 MB · Windows 10 u 11</small></span></a>',
+    mac: '<a class="boton" data-so="mac" href="' + URL_MAC + '">' + icono('mac') +
+         '<span class="lineas">Descargar para Mac<small>Planeador-Mac.zip · 39 MB · macOS 11 o más nuevo</small></span></a>'
+  };
+
+  if (so === 'win' || so === 'mac') {
+    var otro = so === 'win' ? 'mac' : 'win';
+    caja.innerHTML = BOTON[so] + '<p class="otra">¿Usas ' + (otro === 'mac' ? 'Mac' : 'Windows') + '? <a data-so="' + otro +
+      '" href="' + (otro === 'mac' ? URL_MAC : URL_WIN) + '">Descárgalo para ' + (otro === 'mac' ? 'Mac' : 'Windows') + '</a></p>';
+  } else if (so === 'cel') {
+    document.documentElement.classList.add('es-cel');
+    caja.innerHTML =
+      '<div class="aviso-cel"><h3>Ábrelo en tu computadora</h3>' +
+      '<p>El Planeador es para computadora con Windows o con Mac; en el celular no funciona. Mándate este enlace y ábrelo allá:</p>' +
+      '<div class="enlace">' + aqui + '</div>' +
+      '<div class="acciones">' +
+      (navigator.share ? '<button class="chico" id="compartir">Compartir enlace</button>' : '') +
+      '<button class="chico claro" id="copiar">Copiar enlace</button>' +
+      '<a class="chico claro" href="mailto:?subject=' + encodeURIComponent('Planeador para mi computadora') +
+      '&body=' + encodeURIComponent('Descárgalo aquí: ' + aqui) + '">Mandármelo por correo</a>' +
+      '</div></div>';
+  } else {
+    caja.insertAdjacentHTML('afterbegin', '<p class="otra">Por ahora el Planeador es para Windows y Mac.</p>');
+  }
+
+  // la pestaña de los pasos: la del sistema de quien visita
+  var pestanas = [document.getElementById('t-win'), document.getElementById('t-mac')];
+  function elige(k, enfocar) {
+    pestanas.forEach(function (t) {
+      var si = t.id === 't-' + k;
+      t.setAttribute('aria-selected', si);
+      t.tabIndex = si ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !si;
+      if (si && enfocar) t.focus();
+    });
+  }
+  pestanas.forEach(function (t, i) {
+    t.addEventListener('click', function () { elige(t.id.slice(2)); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') elige(pestanas[(i + 1) % 2].id.slice(2), true);
+    });
+  });
+  if (so === 'mac') elige('mac');
+
+  // después de descargar: los pasos que siguen
+  var toast = document.getElementById('toast'), reloj;
+  function avisa(html) {
+    toast.innerHTML = html;
+    toast.classList.add('ver');
+    clearTimeout(reloj);
+    reloj = setTimeout(function () { toast.classList.remove('ver'); }, 9000);
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-so]');
+    if (!a) return;
+    var k = a.getAttribute('data-so');
+    elige(k);
+    avisa('Tu descarga empezó. <a href="#instalar">Sigue estos 3 pasos</a> para instalarlo en ' + (k === 'mac' ? 'tu Mac' : 'Windows') + '.');
+  });
+
+  // en el celular: compartir o copiar el enlace
+  var compartir = document.getElementById('compartir');
+  if (compartir) compartir.addEventListener('click', function () {
+    navigator.share({ title: 'Planeador', text: 'Descárgalo en tu computadora', url: aqui }).catch(function () {});
+  });
+  var copiar = document.getElementById('copiar');
+  if (copiar) copiar.addEventListener('click', function () {
+    var listo = function () { avisa('Enlace copiado. Pégalo en un mensaje para ti y ábrelo en tu computadora.'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(aqui).then(listo, function () { prompt('Copia este enlace:', aqui); });
+    } else {
+      prompt('Copia este enlace:', aqui);
+    }
+  });
+})();
+</script>
+</body>
+</html>
