@@ -182,11 +182,12 @@ footer a { color: var(--gis); }
 footer .envoltura { display: flex; flex-wrap: wrap; gap: 10px 30px; justify-content: space-between; }
 
 .toast {
-  position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 140%); transition: transform .3s;
+  position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, calc(100% + 40px)); visibility: hidden;
+  transition: transform .3s, visibility .3s;      /* escondido del todo: vacío se asomaba abajo como una manchita */
   background: var(--texto); color: #fff; padding: 14px 20px; border-radius: 14px; max-width: calc(100% - 32px);
   box-shadow: 0 10px 30px rgba(0,0,0,.3); z-index: 10; font-size: 1rem;
 }
-.toast.ver { transform: translate(-50%, 0); }
+.toast.ver { transform: translate(-50%, 0); visibility: visible; }
 .toast a { color: var(--gis); font-weight: 700; }
 
 @media (max-width: 760px) {
